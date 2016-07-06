@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/xkd/test'
+let g:netrw_dirhist_2='/home/xkd/.vim/nerdtree'
+let g:netrw_dirhist_3='/home/xkd/works/fixbug/voicecall/cmos-voicecall'
+let g:netrw_dirhist_4='/home/xkd/works/telepathy-qt-anongit-freedesktop'
+let g:netrw_dirhist_5='/home/xkd/work/contact'
