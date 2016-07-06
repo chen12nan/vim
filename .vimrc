@@ -31,7 +31,8 @@ filetype plugin on
 "根据侦测到的不同类型采用不同的缩进
 filetype indent on
 
-
+"设置光标所在的行高亮
+hi CursorLine cterm=NONE ctermbg=blue ctermfg=white guibg=NONE guifg=NONE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set tags
 
@@ -49,6 +50,9 @@ nmap <C-f> :Rgrep<CR>
 nmap <C-s> :w<CR>
 nmap <F10> :!lookup<CR>
 nmap <S-f> :LookupFile<CR>
+
+"imap insert 模式下的键盘映射 nmap 常规模式 vmap 试图模式
+imap kj <esc>
 "自动添加cscope
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -140,4 +144,3 @@ let g:miniBufExplModSelTarget = 1 " 不要在不可编辑内容的窗口（如Ta
 " nmap <silent> <leader>lw :LUWalk<cr>
 
 
-hi CursorLine cterm=NONE ctermbg=blue ctermfg=white guibg=NONE guifg=NONE
