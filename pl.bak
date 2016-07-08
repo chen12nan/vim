@@ -1,0 +1,80 @@
+#!/usr/bin/expect
+
+# \ 需转义为 \\\
+# } 需转义为 \}
+# [ 需转义为 \[
+# $ 需转义为 \\\$
+# ` 需转义为 \`
+# " 需转义为 \\\"
+# send "ps -A |awk \'/cmos-voicecall/\{print \$1\}\'"
+#  if 语句要这么写
+#  if { "type" == "-d" } {  不能换行 否则会出错
+#   想要看到运行结果,要加 interact
+
+set timeout 1
+
+set type [ lindex $argv 0]
+set command [lindex $argv 1]
+set greplog [lindex $argv 2]
+
+if { "$type" == "-d" } {
+    spawn ssh-keygen -f "/home/xkd/.ssh/known_hosts" -R 192.168.100.100
+}
+
+spawn ssh 192.168.100.100 -l developer
+
+expect {
+"yes/no" { send "yes\r"; exp_continue}
+"password:" { send "system\r" }
+}
+
+#expect "yes/on:"
+#send "yes\r"
+#expect "password:"
+#send "system\r"
+
+#登陆上系统之后，会出现命令提示符：~$，即系统已经登陆到了远端主机的shell，然后送去要执行的命令
+expect "~$*"
+
+send  "su root\r"
+
+expect "password:"
+
+send "system\r"
+
+send "mount -o remount, rw / \r"
+
+if { "$type" == "-i" } {
+   # 安装 cmos-voicecall-0.8.0-0.armv7tnhl.rpm 包
+   send "rpm -ivh --force cmos-voicecall-0.8.0-0.armv7tnhl.rpm\r"
+   # 修改包的用户和群组
+   send "chown cmos-voicecall:appadmin /usr/apps/cmos-voicecall/bin/cmos-voicecall\r"
+   # 查看 voicecall 的进程
+   send "ps aux |grep voicecall \r"
+   # 把cmos-voicecall 这个进程杀死
+   send "kill -9 \$(ps -A|awk \'/cmos-voicecall/\{print \$1\}\')\r"
+   # 重新查看进程
+   send "ps aux |grep voicecall \r"
+}
+
+
+if { "$type" == "-d" } {
+    if { "$command" == "-i" } {
+      send "rpm -ivh --force cmos-voicecall-0.8.0-0.armv7tnhl.rpm\r"
+      send "chown cmos-voicecall:appadmin /usr/apps/cmos-voicecall/bin/cmos-voicecall\r"
+      send "ps aux |grep voicecall \r"
+      send "kill -9 \$(ps -A|awk \'/cmos-voicecall/\{print \$1\}\')\r"
+      send "journalctl  -fa |grep voicecall\r"
+    }
+}
+
+if { "$type" == "-v" } {
+  send "scp  ./src/voicecall  developer@192.168.100.100:/home/developer\r"
+    
+  
+}
+#send "$command\r"
+
+#send "cd /usr/apps/cmos-contact/libs/\r"
+
+interact
