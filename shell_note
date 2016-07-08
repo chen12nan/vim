@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+
+#configure sublime plantuml   
+1. download plantuml from www.plantuml.com
+2. sublime Menubar: Tools ->Build System -> new Build System
+3. add the command:   "cmd": ["java", "-jar", "/home/sheldon/workspace/tools/system-installation/plantuml.jar", "-charset", "utf-8", "-tpng", "$file"],
+
+
+
+
