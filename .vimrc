@@ -1,5 +1,13 @@
 
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"set copy and paste
+" sudo apt-get install vim-gnome
+" sudo apt-get install vim-gui-common
+" sudo aptitude install vim-full
+"
+" "+y  copy
+" "+p  paste
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "关于显示乱码的问题
 set fencs=utf-8,GB18030,ucs-bom,default,latin1
@@ -19,6 +27,7 @@ set nu
 set hlsearch
 set incsearch
 
+
 "开启光亮光标行
 set cursorline
 """"""""""""""""""""""""""""""""""""高亮"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -31,7 +40,7 @@ filetype plugin on
 "根据侦测到的不同类型采用不同的缩进
 filetype indent on
 
-"设置光标所在的行高亮
+
 hi CursorLine cterm=NONE ctermbg=blue ctermfg=white guibg=NONE guifg=NONE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set tags
@@ -47,11 +56,9 @@ set path+=./
 nmap <F7> :!ctags -R --sort=yes --c++-kinds=+p  --java-kinds=+p --fields=+ialS --extra=+q .<CR>
 nmap <F4> :A<CR>
 nmap <C-f> :Rgrep<CR>
-nmap <C-s> :w<CR>
 nmap <F10> :!lookup<CR>
 nmap <S-f> :LookupFile<CR>
-
-"imap insert 模式下的键盘映射 nmap 常规模式 vmap 试图模式
+imap <C-s> :w<CR>
 imap kj <esc>
 "自动添加cscope
 
