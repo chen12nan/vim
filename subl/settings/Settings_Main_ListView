@@ -1,0 +1,61 @@
+@startuml
+
+participant SettingsActivity
+participant DashboardSummary
+participant Handler
+participant DashboardCategory
+participant DashboardTileView
+participant ViewGroup
+participant LayoutInflater
+participant View
+
+SettingsActivity -> SettingsActivity : onCreate()
+activate SettingsActivity
+
+SettingsActivity -> SettingsActivity: mIsShowingDashboard = true ? \n switchToFragment()
+activate SettingsActivity #FFBBBB
+SettingsActivity -> DashboardSummary : new DashboardSummary()
+DashboardSummary -> DashboardSummary : onCreateView()
+activate DashboardSummary 
+DashboardSummary -> LayoutInflater : inflate
+activate LayoutInflater
+DashboardSummary <- LayoutInflater : return rootView
+deactivate LayoutInflater
+DashboardSummary -> View : findViewById()
+activate View
+DashboardSummary <- View : return mDashboard   (mDashboard 为根View容器，通过addView（View  view） 添加窗口)
+deactivate View
+
+deactivate DashboardSummary
+DashboardSummary -> DashboardSummary:  onResume()
+
+activate DashboardSummary
+DashboardSummary -> DashboardSummary: sendRebuildUI()
+activate DashboardSummary #FFBBBB
+DashboardSummary -> Handler: sendEmptyMessage()
+deactivate DashboardSummary
+deactivate DashboardSummary
+
+deactivate SettingsActivity
+deactivate SettingsActivity
+
+alt Async Call  #red
+DashboardSummary -> Handler : handleMessage()
+activate Handler
+DashboardSummary <- Handler : rebuildUI()
+deactivate Handler
+
+activate DashboardSummary
+DashboardSummary -> DashboardCategory : getTile(int index)
+activate DashboardCategory
+DashboardSummary <- DashboardCategory : return <<DashboardTile >> tile  
+deactivate DashboardCategory
+
+DashboardSummary -> DashboardTileView : tileView = new DashboardTileView()
+DashboardSummary -> DashboardTileView : setTile( tile )
+DashboardSummary -> ViewGroup : addView(tileView)
+deactivate Handler
+deactivate DashboardSummary
+end
+
+@enduml

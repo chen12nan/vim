@@ -1,0 +1,59 @@
+
+// Sequence Disgram
+@startuml
+actor admin
+participant BorrowUI
+participant borrow
+box "Internal Service " #LightBlue
+participant readers
+participant item
+participant books
+end box
+participant reservation
+
+
+admin  -> BorrowUI : 1:login()
+activate admin
+
+activate BorrowUI
+deactivate BorrowUI
+
+admin -> BorrowUI : 2:checkstu_card()
+
+activate BorrowUI
+deactivate BorrowUI
+
+admin -> BorrowUI : 3: showinformation()
+
+activate BorrowUI
+BorrowUI -> borrow : 5: borrow()
+
+activate borrow
+borrow -> readers : 6 : getreaders()
+
+activate readers
+borrow <- readers : return valid
+deactivate readers
+
+borrow -> item : 7 : getTitle()
+
+activate item
+deactivate item
+deactivate borrow
+borrow -> reservation : 8 : check_reservation()
+activate borrow
+activate reservation
+borrow <- reservation : 9 : getnoreservation()
+deactivate reservation
+borrow -> books : 10 : create(borrewer, item)
+activate books
+deactivate books
+deactivate borrow
+deactivate BorrowUI
+BorrowUI <- borrow : borrow Successfully ?
+activate borrow
+activate BorrowUI
+deactivate BorrowUI
+deactivate borrow
+deactivate admin
+@enduml
