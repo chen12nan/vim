@@ -1,0 +1,8 @@
+@startuml
+
+ServiceConnection -> Stub : asInterface( IBinder )
+activate Stub
+ServiceConnection <- Stub : return Stub.Proxy() 
+deactivate Stub
+
+@enduml

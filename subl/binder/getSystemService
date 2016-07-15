@@ -1,0 +1,56 @@
+@startuml
+
+actor User
+participant Activity
+participant ContextImpl
+/'
+note left of ContextImpl
+registerService 把ServiceFetcher注册到HashMap变量中，
+当调用getSystemService时，HashMap 中获得 ServiceFetcher，
+并调用createService 获得对应的service
+end note 
+'/
+
+alt Initialization SystemServiceRegistry
+SystemServiceRegistry -> SystemServiceRegistry : registerService( new ServiceFetcher ) 
+activate  SystemServiceRegistry
+SystemServiceRegistry -> CachedServiceFetcher:  重新实现\n createService(ContextImpl ctx)
+activate CachedServiceFetcher
+CachedServiceFetcher -> AccessibilityManager : getInstance()
+activate AccessibilityManager
+AccessibilityManager -> ServiceManager: getService\n(Context.ACCESSIBILITY_SERVICE)
+activate ServiceManager
+AccessibilityManager <- ServiceManager: return IBinder
+deactivate ServiceManager
+AccessibilityManager -> IAccessibilityManager.Stub : asInterface( IBinder )
+activate IAccessibilityManager.Stub
+AccessibilityManager <- IAccessibilityManager.Stub : return IAccessibilityManager\n  //BpInterface
+deactivate IAccessibilityManager.Stub
+AccessibilityManager -> AccessibilityManager : new AccessibilityManager\n(IAccessibilityManager)
+activate AccessibilityManager #FFBBBB
+deactivate AccessibilityManager
+SystemServiceRegistry <- AccessibilityManager: return AccessibilityManager
+deactivate AccessibilityManager
+deactivate CachedServiceFetcher
+deactivate SystemServiceRegistry
+end
+
+User -> Activity : getSystemService\n(String name)
+activate Activity
+Activity -> ContextImpl : getSystemService\n(String name)
+activate ContextImpl
+ContextImpl -> SystemServiceRegistry : getSystemService\n(String name)
+activate SystemServiceRegistry
+SystemServiceRegistry -> CachedServiceFetcher:getService(ContextImpl ctx)
+activate CachedServiceFetcher
+CachedServiceFetcher ->CachedServiceFetcher:createService()
+activate CachedServiceFetcher #FFBBBB
+deactivate CachedServiceFetcher
+User <- CachedServiceFetcher : return  systemservice
+deactivate CachedServiceFetcher
+deactivate SystemServiceRegistry
+deactivate ContextImpl
+deactivate Activity
+
+
+@enduml

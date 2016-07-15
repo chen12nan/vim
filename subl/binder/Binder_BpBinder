@@ -1,0 +1,17 @@
+@startuml
+interface IXXX
+
+RefBase<|-- IBinder
+RefBase<|-- BpRefBase
+IBinder <|-- BBinder
+IBinder <|-- BpBinder
+IXXX <|.. BnInterface
+BBinder <|-- BnInterface
+BnInterface <|-- BnXXX
+BpRefBase <|-- BpInterface
+IXXX <|.. BpInterface
+
+BpInterface <|-- BpXXX
+
+BpBinder --* BpInterface
+@enduml

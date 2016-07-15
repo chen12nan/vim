@@ -39,7 +39,7 @@ deactivate DashboardSummary
 deactivate SettingsActivity
 deactivate SettingsActivity
 
-alt Async Call  #red
+alt Async Call  #FFBBBB
 DashboardSummary -> Handler : handleMessage()
 activate Handler
 DashboardSummary <- Handler : rebuildUI()
