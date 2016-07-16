@@ -5,7 +5,7 @@
 " sudo apt-get install vim-gui-common
 " sudo aptitude install vim-full
 "
-" "+y  copy
+" "+y  copy  
 " "+p  paste
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -26,7 +26,18 @@ set cindent
 set nu
 set hlsearch
 set incsearch
-
+"vim折叠设置
+set foldmethod=indent "set default foldmethod
+"zi 打开关闭折叠
+"zv 查看此行
+"zm 关闭折叠
+"zM 关闭所有
+"zr 打开
+"zR 打开所有
+"zc 折叠当前行
+"zo 打开当前折叠
+"zd 删除折叠
+"zD 删除所有折叠
 
 "开启光亮光标行
 set cursorline
@@ -60,17 +71,25 @@ nmap <F10> :!lookup<CR>
 nmap <S-f> :LookupFile<CR>
 imap <C-s> :w<CR>
 imap kj <esc>
+
+" "映射LookupFile为,lk
+ nmap la :LUTags<cr>
+ "映射LUBufs为,ll
+ nmap lb :LUBufs<cr>
+ "映射LUWalk为,lw
+ nmap ld :LUWalk<cr>
+
 "自动添加cscope
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set Taglist
 let Tlist_Exit_OnlyWindow=1 
-let Tlist_Auto_Open=1
+let Tlist_Auto_Open=0
 let Tlist_WinWidth=40
 let Tlist_WinHeight=100
 let Tlist_File_Fold_Auto_Close=1 "非当前文件，函数列表折叠隐藏
 "map <slient> <leader>tl :TlistToggle<cr> (没有作用)
-nmap <F3> :TlistToggle<CR>
+nmap <F2> :TlistToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set NERDTree and Winmanager
@@ -79,7 +98,7 @@ let NERDTreeWinSize=25
 "let NERDTreeQuitOnOpen=1
 "let NERDTreeWinHeight=20  （没有作用）
 "let NERDTreeWinWidth=20   （没有作用）
-nmap <F2> :NERDTreeToggle<CR>
+nmap <F3> :NERDTreeToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -143,11 +162,4 @@ let g:miniBufExplModSelTarget = 1 " 不要在不可编辑内容的窗口（如Ta
  if filereadable("./lookuptags")                "设置tag文件的名字
  let g:LookupFile_TagExpr = '"./lookuptags"'
  endif
-" "映射LookupFile为,lk
-" nmap <silent> <leader>lk :LUTags<cr>
- "映射LUBufs为,ll
-" nmap <silent> <leader>ll :LUBufs<cr>
- "映射LUWalk为,lw
-" nmap <silent> <leader>lw :LUWalk<cr>
-
 

@@ -9,9 +9,20 @@ IXXX <|.. BnInterface
 BBinder <|-- BnInterface
 BnInterface <|-- BnXXX
 BpRefBase <|-- BpInterface
-IXXX <|.. BpInterface
+
 
 BpInterface <|-- BpXXX
 
 BpBinder --* BpInterface
+
+/'隐藏成员函数'/
+hide members
+
+/' 去掉类的标识（大写的C）'/
+hide RefBase circle
+hide circle
+
+/' 隐藏类的字段'/
+hide RefBase fields
+
 @enduml
