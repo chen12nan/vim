@@ -1,0 +1,24 @@
+@startuml
+participant Server
+participant BnInterface
+participant ServiceManager
+participant Client
+participant BpInterface
+
+Server --> ServiceManager : addService\n(String, BnInterface)
+Client  --> ServiceManager : getService(String) 
+activate ServiceManager
+Client  <-- ServiceManager : return BpInterface<XXX>
+deactivate ServiceManager
+
+Client --> BpInterface : callInterface(sp<IBinder>)
+activate BpInterface
+BpInterface --> BpInterface : Parcel
+activate BpInterface
+deactivate BpInterface
+BpInterface --> BpInterface : remote->transact()
+activate BpInterface
+BpInterface --> BnInterface : onTransact() (IPCThreadState binder_ioctl)
+deactivate BpInterface
+deactivate BpInterface
+@enduml

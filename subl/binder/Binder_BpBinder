@@ -1,4 +1,7 @@
 @startuml
+
+/'http://www.tuicool.com/articles/7zMRj2v'/
+
 interface IXXX
 
 RefBase<|-- IBinder

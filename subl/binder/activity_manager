@@ -1,0 +1,21 @@
+@startuml
+actor User
+
+User --> Activity : startActivity(Intent)
+activate Activity
+Activity --> Instrumentation : execStartActivity()
+activate Instrumentation
+Instrumentation --> ActivityManagerProxy: startActivity() \n// ApplicationThread
+activate ActivityManagerProxy
+ActivityManagerProxy --> BpInterface: transact()
+BpInterface -->  ActivityManagerService : onTransact()
+activate ActivityManagerService
+ActivityManagerService --> ActivityManagerService: startActivity()
+activate ActivityManagerService #FFBBBB
+ActivityManagerService --> ActivityStackSupervisor: startActivityMayWait()
+deactivate ActivityManagerService
+deactivate ActivityManagerService
+deactivate ActivityManagerProxy
+deactivate Instrumentation
+deactivate Activity
+@enduml
