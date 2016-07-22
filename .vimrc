@@ -69,11 +69,11 @@ nmap <F4> :A<CR>
 nmap <C-f> :Rgrep<CR>
 nmap <F10> :!lookup<CR>
 nmap <S-f> :LookupFile<CR>
-imap <C-s> :w<CR>
+nmap <F-s> :w<CR>
 imap kj <esc>
 
 " "映射LookupFile为,lk
- nmap la :LUTags<cr>
+" nmap la :LUTags<cr>
  "映射LUBufs为,ll
  nmap lb :LUBufs<cr>
  "映射LUWalk为,lw

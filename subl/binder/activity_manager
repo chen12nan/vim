@@ -1,6 +1,43 @@
 @startuml
-actor User
 
+actor User
+participant "Settings.System" as System
+participant ContentResolver
+box "IPC" #LightBlue
+participant ContentProvider
+participant ContentObserver
+end box
+ContentProvider --> ContentProvider : registerContentObserver\n( uri, bool, ContentObserver)
+
+User --> System : putInt(ContentResolver cr,\n String name, int value)
+activate System
+System -->System: putStringForUser(cr, name, value)
+activate System
+System --> ContentResolver : acquireProvider()
+activate ContentResolver
+System <-- ContentResolver: return ContentProvider
+deactivate ContentResolver
+System --> ContentProvider: call(packageName, command, name, arg)\n name和value存在arg里,\n ContentProvider 的 update， delete函数中\n要调用.notifychange(uri , null)
+activate ContentProvider
+ContentProvider --> System
+deactivate ContentProvider
+deactivate System
+deactivate System
+
+ContentProvider --> ContentObserver: onChange()
+@enduml
+
+@startuml
+actor User
+participant Activity
+participant Instrumentation
+participant ActivityManagerProxy
+participant BpInterface
+box  "RPC"  #LightBlue
+participant ActivityManagerService
+participant ActivityStackSupervisor
+participant ActivityStack
+end box 
 User --> Activity : startActivity(Intent)
 activate Activity
 Activity --> Instrumentation : execStartActivity()
@@ -13,6 +50,22 @@ activate ActivityManagerService
 ActivityManagerService --> ActivityManagerService: startActivity()
 activate ActivityManagerService #FFBBBB
 ActivityManagerService --> ActivityStackSupervisor: startActivityMayWait()
+activate ActivityStackSupervisor 
+ActivityStackSupervisor --> ActivityStackSupervisor: startActivityLocked()
+activate ActivityStackSupervisor  #FFBBBB
+ActivityStackSupervisor --> ActivityStackSupervisor: startActivityUncheckedLocked()
+activate ActivityStackSupervisor 
+ActivityStackSupervisor --> ActivityStack : startActivityLocked()
+activate ActivityStack
+ActivityStackSupervisor <-- ActivityStack : resumeTopActivitiesLocked()
+activate ActivityStackSupervisor
+ActivityStackSupervisor --> ActivityStackSupervisor : resumeTopActivitiesLocked()
+
+deactivate ActivityStack
+deactivate ActivityStackSupervisor
+deactivate ActivityStackSupervisor
+deactivate ActivityStackSupervisor
+deactivate ActivityStackSupervisor
 deactivate ActivityManagerService
 deactivate ActivityManagerService
 deactivate ActivityManagerProxy
