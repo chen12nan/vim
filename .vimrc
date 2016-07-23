@@ -73,11 +73,11 @@ nmap <F-s> :w<CR>
 imap kj <esc>
 
 " "映射LookupFile为,lk
-" nmap la :LUTags<cr>
+nmap laa :LUTags<cr>
  "映射LUBufs为,ll
- nmap lb :LUBufs<cr>
+ nmap lss :LUBufs<cr>
  "映射LUWalk为,lw
- nmap ld :LUWalk<cr>
+ nmap lww :LUWalk<cr>
 
 "自动添加cscope
 
