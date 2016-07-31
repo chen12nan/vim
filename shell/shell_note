@@ -8,5 +8,8 @@
 3. add the command:   "cmd": ["java", "-jar", "/home/sheldon/workspace/tools/system-installation/plantuml.jar", "-charset", "utf-8", "-tpng", "$file"],
 
 
+#mac terminal ls color
+#export CLICOLOR=1
+#export LSCOLORS=gxfxaxdxcxegedabagacad
 
 
