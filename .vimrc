@@ -17,17 +17,18 @@ colorscheme darkblue
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "设置缩进
-set tabstop=4
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+"set noexpandtab
+set expandtab
 set autoindent
 set cindent
 set nu
 set hlsearch
 set incsearch
 "vim折叠设置
-set foldmethod=indent "set default foldmethod
+"set foldmethod=indent "set default foldmethod
 "zi 打开关闭折叠
 "zv 查看此行
 "zm 关闭折叠
@@ -70,8 +71,8 @@ nmap <C-f> :Rgrep<CR>
 nmap <F10> :!lookup<CR>
 nmap <S-f> :LookupFile<CR>
 nmap <F-s> :w<CR>
+nmap <C-l>:set foldmethod=indent<CR>
 imap kj <esc>
-
 " "映射LookupFile为,lk
 nmap laa :LUTags<cr>
  "映射LUBufs为,ll
