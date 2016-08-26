@@ -70,8 +70,7 @@ nmap <F4> :A<CR>
 nmap <C-f> :Rgrep<CR>
 nmap <F10> :!lookup<CR>
 nmap <S-f> :LookupFile<CR>
-nmap <F-s> :w<CR>
-nmap <C-l>:set foldmethod=indent<CR>
+nmap <C-w> :q<CR>
 imap kj <esc>
 " "映射LookupFile为,lk
 nmap laa :LUTags<cr>
