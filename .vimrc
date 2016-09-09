@@ -17,8 +17,8 @@ colorscheme darkblue
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "设置缩进
-set tabstop=2
-set softtabstop=2
+"set tabstop=2
+"set softtabstop=2
 set shiftwidth=2
 "set noexpandtab
 set expandtab
@@ -70,7 +70,7 @@ nmap <F4> :A<CR>
 nmap <C-f> :Rgrep<CR>
 nmap <F10> :!lookup<CR>
 nmap <S-f> :LookupFile<CR>
-nmap <C-w> :q<CR>
+nmap <C-q> :q<CR>
 imap kj <esc>
 " "映射LookupFile为,lk
 nmap laa :LUTags<cr>
