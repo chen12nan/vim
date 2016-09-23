@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $1 == "-p" ];then
+  echo "clone $1 ..."
+  git clone https://cr.deepin.io/dde/$2
+exit 1;
+elif [ $1 == "-a" ];then
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-control-center && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-control-center/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-account-faces && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-account-faces/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-api && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-api/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-calendar && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-calendar/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-daemon && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-daemon/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-desktop && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-desktop/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-dock && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-dock/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-file-manager && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-file-manager/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-help && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-help/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-launcher && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-launcher/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-polkit-agent && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-polkit-agent/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-session-ui && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-session-ui/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/startdde && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg startdde/.git/hooks/
+  git clone ssh://chen12nan@cr.deepin.io:29418/deepin-tool-kit && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg deepin-tool-kit/.git/hooks/
+fi
