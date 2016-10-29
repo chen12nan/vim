@@ -31,3 +31,8 @@ ip定位功能的调研和代码测试，合并weather到dde-control-center
 
 1024-1028
 完成控制中心天气插件加载过程UI的代码实现
+优化控件
+优化控件和datetime的业务逻辑
+dbus的xml转interface测试和修改
+经纬度导平面地图的映射关系测试，根据新框架修改Datetime
+

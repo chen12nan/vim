@@ -1,9 +1,8 @@
 #!/bin/bash
 
 if [ $1 == "-p" ];then
-  echo "clone $1 ..."
-  git clone https://cr.deepin.io/dde/$2
-exit 1;
+  echo "clone $2 ..."
+  git clone ssh://chen12nan@cr.deepin.io:29418/dde/$2 && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg $2/.git/hooks/
 elif [ $1 == "-a" ];then
   git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-control-center && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-control-center/.git/hooks/
   git clone ssh://chen12nan@cr.deepin.io:29418/dde/dde-account-faces && scp -p -P 29418 chen12nan@cr.deepin.io:hooks/commit-msg dde-account-faces/.git/hooks/
