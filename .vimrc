@@ -17,7 +17,7 @@ colorscheme darkblue
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "设置缩进
-"set tabstop=2
+set tabstop=2
 "set softtabstop=2
 set shiftwidth=2
 "set noexpandtab
@@ -58,10 +58,12 @@ hi CursorLine cterm=NONE ctermbg=blue ctermfg=white guibg=NONE guifg=NONE
 "set tags
 
 set tags=tags
-set tags+=./tags
+"set tags+=./tags
 " set tags+=/usr/local/Trolltech/Qt-4.8.6/include/tags
 " set tags+=/usr/include/GNUstep/tags
 " set path+=/home/xkd/work/voicecall-manager/lib/src
+"set tags+=/usr/include/libdtk-1.0/tags
+"set tags+=/usr/include/x86_64-linux-gnu/qt5/tags
 set path+=./
 "set tags+=/opt/Qt5.3.0/tags
 "每次保存文件的时候更新 tags
@@ -85,7 +87,7 @@ nmap laa :LUTags<cr>
 "set Taglist
 let Tlist_Exit_OnlyWindow=1 
 let Tlist_Auto_Open=0
-let Tlist_WinWidth=40
+let Tlist_WinWidth=20
 let Tlist_WinHeight=100
 let Tlist_File_Fold_Auto_Close=1 "非当前文件，函数列表折叠隐藏
 "map <slient> <leader>tl :TlistToggle<cr> (没有作用)
@@ -94,7 +96,7 @@ nmap <F2> :TlistToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set NERDTree and Winmanager
 let NERDTreeWinPos="right"
-let NERDTreeWinSize=25
+let NERDTreeWinSize=15
 "let NERDTreeQuitOnOpen=1
 "let NERDTreeWinHeight=20  （没有作用）
 "let NERDTreeWinWidth=20   （没有作用）

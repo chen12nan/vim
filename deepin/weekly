@@ -30,9 +30,22 @@ ip定位功能的调研和代码测试，合并weather到dde-control-center
 优化SettingsGroup和Datetime控制
 
 1024-1028
+"""""""""""""""""""""""""""""""""""""
 完成控制中心天气插件加载过程UI的代码实现
 优化控件
 优化控件和datetime的业务逻辑
 dbus的xml转interface测试和修改
 经纬度导平面地图的映射关系测试，根据新框架修改Datetime
 
+1031-1104
+完成经纬度到平面地图的映射代码编程，datetime 设置时区的UI交互
+编写带有Section的ListView控件以及快速索引
+修改选择时区bug, 编写带有Section的ListView控件以及快速索引
+添加keyboard 和 inputdevice dbus接口
+编写带有Section的ListView控件以及快速索引,优化weather和datetime窗口布局
+
+1107-1111
+编写Keyboard and Language 模块，合并LangSector的dbus 到dde-qt-dbus-factory, 了解dbus返回数据类型以及数据的含义
+编写Keyboard需要的控件 SettingsHead 和 CheckItem ， 定义控件和UI交互的接口
+基本完成Keyboard布局，界面交互，以及数据读取，修改xml生成dbusinterface接口bug
+编写语言窗口模块，调研快捷键数据的含义和代码实现方式
