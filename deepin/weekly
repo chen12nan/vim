@@ -49,3 +49,7 @@ dbus的xml转interface测试和修改
 编写Keyboard需要的控件 SettingsHead 和 CheckItem ， 定义控件和UI交互的接口
 基本完成Keyboard布局，界面交互，以及数据读取，修改xml生成dbusinterface接口bug
 编写语言窗口模块，调研快捷键数据的含义和代码实现方式
+
+1117-1118
+  调研键盘的keycode相关知识，讨论解决xml生成interface的qDBusRegisterMetaType注册对象问题，测试keybinding dbus
+  添加快捷键model，键盘布局的搜索，编写快捷键列表控件 ShortcutItem
