@@ -53,3 +53,11 @@ dbus的xml转interface测试和修改
 1117-1118
   调研键盘的keycode相关知识，讨论解决xml生成interface的qDBusRegisterMetaType注册对象问题，测试keybinding dbus
   添加快捷键model，键盘布局的搜索，编写快捷键列表控件 ShortcutItem
+
+
+1121-1125
+完成控制中心的虚拟键盘的实现
+优化虚拟键盘的交互和数据，以及响应虚拟键盘的策略
+编写InputItem控件，完成快捷键的添加，修改，删除等功能
+添加SearchDbus类，测试SearchDbus dbus，完成快捷键搜索的功能和交互
+了解系统更新文档，编写系统更新
