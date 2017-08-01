@@ -1,0 +1,231 @@
+@startuml
+User -> CaptureExecute: executeOne
+activate CaptureExecute #FFBBBB
+
+==configure the information==
+CaptureExecute -> LayerTabWidget: data(row, column)
+activate LayerTabWidget
+
+CaptureExecute <- LayerTabWidget: get all the content of pattern layer and pass layer
+deactivate LayerTabWidget
+
+CaptureExecute -> LayoutViewerInstance: getTopLayerGroups
+activate LayoutViewerInstance
+CaptureExecute <- LayoutViewerInstance: return the top layer
+deactivate LayoutViewerInstance
+
+CaptureExecute -> PatternDB:createPattern(name) 
+activate PatternDB
+CaptureExecute <- PatternDB: create a pattern
+deactivate PatternDB
+
+==traverse the top layer in current canvas==
+CaptureExecute -> CaptureExecute: initLayer(topLayer, pattern) 
+activate CaptureExecute #LightBlue
+CaptureExecute -> LayerGroupBase: getChild(index) // traverse the topLayer to get the child layer that have polygon
+activate LayerGroupBase
+CaptureExecute <- LayerGroupBase: return the child layer
+deactivate LayerGroupBase
+
+==configure the crop information==
+CaptureExecute -> CropManager: CropManager()  //cropMgr
+activate CropManager
+CaptureExecute <- CropManager: construct a local object name cropMgr
+deactivate CropManager
+
+CaptureExecute -> Figures: Figures()  //figures
+activate Figures
+CaptureExecute <- Figures: construct a local object to save the polygon data
+deactivate Figures
+
+CaptureExecute -> CropInfo: CropInfo(dbu, x, y, w, h, pix...) // cropInfo
+activate CropInfo
+CaptureExecute <- CropInfo: construct a local object with the crop area
+deactivate CropInfo
+
+==fetch polygon from gds==
+CaptureExecute -> CaptureExecute: getPolygons(layer, x, y, w, h, drawable_polygons, dbu) \nget all the polygons in curren viewport
+activate CaptureExecute #LightGreen
+deactivate CaptureExecute
+
+CaptureExecute -> CropManager: createCropper(cropInfo)
+
+CaptureExecute -> CropManager: clipPolygons2Figures(drawable_polygons, figures)
+activate CropManager
+CaptureExecute <- CropManager: get polygon data from layer and save to figures
+deactivate CropManager
+
+CaptureExecute -> PolygonSet: PolygonSet(layerName, dbu)
+activate PolygonSet
+CaptureExecute <- PolygonSet: construct a local object to save the polygon data from figures to mongodb
+deactivate PolygonSet
+
+CaptureExecute -> PolygonSet: setAttr(key, value);
+activate PolygonSet
+CaptureExecute <- PolygonSet: set the attribute of polygonset
+deactivate PolygonSet
+
+CaptureExecute -> CaptureExecute: initPolygonSet(pattern, figures, polygonset)\nuse the figures to initialize the polygonset
+activate CaptureExecute #LightGreen
+deactivate CaptureExecute
+
+==add polygon to pattern==
+CaptureExecute -> Pattern: attachPolygonSet(polygonset)
+activate Pattern
+CaptureExecute <- Pattern: attach the polygonset to pattern
+deactivate Pattern
+deactivate CaptureExecute
+
+CaptureExecute -> Pattern: setAttr("dbu", dbu);
+activate Pattern
+CaptureExecute <- Pattern: add dbu for pattern
+deactivate Pattern
+
+==add attribute to pattern==
+CaptureExecute -> TreeModel: addAttributeToPattern(pattern)
+activate TreeModel
+CaptureExecute <- TreeModel: add the attribute to pattern
+deactivate TreeModel
+
+==save pattern to database==
+CaptureExecute -> PatternDB: addPattern(pattern)
+activate PatternDB
+CaptureExecute <- PatternDB: save the pattern to database
+deactivate PatternDB
+
+
+deactivate CaptureExecute
+@enduml
+
+@startuml
+
+class "PlmInstanceImp" as PlmInstanceImp
+
+package "Pattern Explorer" #LightBlue {
+	PlmInstanceImp "1" *-- "1" PLMLibraryExplorer: contains
+	PLMLibraryExplorer "1" *-- "2" QtVariantPropertyManager
+	PLMLibraryExplorer "1" *-- "2" QTreeWidget: contains
+}
+
+package "Pattern Capture" #LightBlue {
+	PlmInstanceImp "1" *-- "1" PatternCaptureForm: contains
+	PatternCaptureForm "1" *-- "3" CaptureTabWidget: containsb
+
+	PatternCaptureForm "1" *-- "1" LayerTabWidget: contains
+
+	CaptureTabWidget "1" *-- "many" CaptureExecute: contains
+
+	class "QTreeView" as TreeView
+	PatternCaptureForm "1" *-- "1" TreeView: contains
+
+	TreeView "1" *-- "1" TreeModel: contains
+	TreeView "1" *-- "1" TreeDelegate: contains
+}
+
+package "Pattern Viewer/Editor" #LightBlue {
+	PlmInstanceImp "1" *-- "many" PLMPatternViewerGrp: contains
+	class "QTreeView" as TreeView1
+	class "TreeModel" as TreeModel1
+	class "TreeDelegate" as TreeDelegate1
+
+	PLMPatternViewerGrp "1" *-- "1" TreeView1: contains
+	PLMPatternViewerGrp "1" *-- "1" LayoutViewerInstance
+
+	TreeView1 "1" *-- "1" TreeModel1: contains
+	TreeView1 "1" *-- "1" TreeDelegate1: contains
+}
+@enduml
+
+@startuml
+
+User -> PatternCaptureForm: onCapturePattern()
+
+activate PatternCaptureForm #FFBBBB
+
+==judge whether can do capture==
+PatternCaptureForm -> LayerTabWidget:canCapture(QString)
+activate LayerTabWidget
+PatternCaptureForm <- LayerTabWidget:check whether can capture, if false, return
+deactivate LayerTabWidget
+
+PatternCaptureForm -> QMap: keys(ViewerHandle)
+activate QMap
+PatternCaptureForm <- QMap: return the list of CaptureExecute
+deactivate QMap
+
+PatternCaptureForm -> QList: isEmpty()
+activate QList
+PatternCaptureForm <- QList: check whether the list is empty, if true, return
+deactivate QList
+
+==Get mongodb path and plib name==
+PatternCaptureForm -> QSettings: value("CURRENT_DB_PATH")
+activate QSettings
+PatternCaptureForm <- QSettings: get the current pdb path
+deactivate QSettings
+
+PatternCaptureForm -> QSettings: value("CURRENT_LIBRARY")
+activate QSettings
+PatternCaptureForm <- QSettings: get the current plib name
+deactivate QSettings
+
+PatternCaptureForm -> PatternCaptureForm: chooseMongoPath()
+activate PatternCaptureForm #DarkSalmon
+deactivate PatternCaptureForm
+note left: If both pdb path and plib name are empty\nA dialog will pop up for user to select the pdb path and the plib name
+
+==connect pdb==
+PatternCaptureForm -> PatternDB: connectPatternDB(pdbPath)
+activate PatternDB
+PatternCaptureForm <- PatternDB: return the pdb pointer
+deactivate PatternDB
+
+==execute capture function==
+PatternCaptureForm -> CaptureExecute: executreOne() // Traverse the list to execute
+activate CaptureExecute
+PatternCaptureForm <- CaptureExecute: if capture successfully, return true, otherwise return false
+deactivate CaptureExecute
+
+deactivate PatternCaptureForm
+@enduml
+
+@startuml
+PlmInstanceImp "1" *-- "1" PLMLibraryExplorer: contains
+PlmInstanceImp "1" *-- "1" PatternCaptureForm: contains
+PlmInstanceImp "1" *-- "many" PLMPatternViewerGrp: contains
+
+PLMLibraryExplorer "1" *-- "2" QtVariantPropertyManager
+note left: They are pattern attribute and library attribute respectively.
+
+PLMLibraryExplorer "1" *-- "2" QTreeWidget: contains
+note top:m_groupTree is used for displaying pattern library\nm_patTree is used for displaying pattern
+
+
+package "Pattern Capture"  #LightBlue {
+PatternCaptureForm "1" *-- "3" CaptureTabWidget: contains
+note top: they are By Box,By Layer and By File respectively
+
+PatternCaptureForm "1" *-- "1" LayerTabWidget: contains
+note right of LayerTabWidget: Used for specifying layer
+
+CaptureTabWidget "1" *-- "many" CaptureExecute: contains
+note left: Every CaptureExecute represent a pattern or clipwindow
+
+PatternCaptureForm "1" *-- "1" QTreeView: contains
+note top: Used for setting the attribute of pattern
+
+QTreeView "1" *-- "1" TreeModel: contains
+QTreeView "1" *-- "1" TreeDelegate: contains
+
+note right of PatternCaptureForm: Capture Main Window
+}
+
+
+
+PLMPatternViewerGrp "1" *-- "1" QTreeView: contains
+note top: Used for setting the attribute of pattern
+
+QTreeView "1" *-- "1" TreeModel: contains
+QTreeView "1" *-- "1" TreeDelegate: contains
+
+@enduml
