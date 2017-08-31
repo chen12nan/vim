@@ -1,0 +1,79 @@
+@startuml
+
+==display pattern==
+PLMPatternViewerGrp -> PLMPatternViewerGrp:dispalyPattern()
+activate PLMPatternViewerGrp
+
+PLMPatternViewerGrp -> LayoutViewerInstance: createLayerGroup()
+activate LayoutViewerInstance
+PLMPatternViewerGrp <- LayoutViewerInstance: create a top layer
+deactivate LayoutViewerInstance
+
+PLMPatternViewerGrp -> Pattern: getPolygonSetList()
+activate Pattern
+PLMPatternViewerGrp <- Pattern: get the polygonset list
+deactivate Pattern
+
+loop traverse the polygonset list
+PLMPatternViewerGrp -> PLMPatternViewerGrp: initLayerProperty(polygonset)
+activate PLMPatternViewerGrp #LightGreen
+note right: get the labels of polygonset and named the child layer according to the labels
+deactivate PLMPatternViewerGrp
+
+
+alt get the bbox_rect
+PLMPatternViewerGrp -> PolygonSet: getAttr_Line("bbox_rect")
+activate PolygonSet
+PLMPatternViewerGrp <- PolygonSet: get the value of bbox_rect
+deactivate PolygonSet
+end
+
+PLMPatternViewerGrp -> LayerGroupBase: setProperty() \nkeep the polygonset property
+
+PLMPatternViewerGrp -> PLMPatternViewerGrp: initLayerByPolygonSet(layer, polygonset)
+activate PLMPatternViewerGrp #LightGreen
+PLMPatternViewerGrp -> PatternCaptureUtil: getKeyNameByValueType(polygonset, ATTR_ATTRIBUTE)
+activate PatternCaptureUtil
+PLMPatternViewerGrp <- PatternCaptureUtil: return the name list of polygon
+deactivate PatternCaptureUtil
+
+loop traverse the name list
+PLMPatternViewerGrp -> PolygonSet: getPolygon(name)
+activate PolygonSet
+PLMPatternViewerGrp <- PolygonSet: get a polygon pointer
+deactivate PolygonSet
+
+participant "lib::infra::geometry::Polygon" as POLY
+PLMPatternViewerGrp -> POLY: construct a geometry::Polygon
+activate POLY
+PLMPatternViewerGrp <- POLY: assign the polygon data to lib::infra::geometry::Polygon
+deactivate POLY
+PLMPatternViewerGrp -> DrawableObject: AppendObj(CanvasObject)
+activate DrawableObject
+PLMPatternViewerGrp <- DrawableObject: add the polygon to display on canvas
+deactivate DrawableObject
+
+end
+
+deactivate PLMPatternViewerGrp
+
+end
+
+
+deactivate PLMPatternViewerGrp
+
+@enduml
+
+@startuml
+
+start
+:"deal with step 1";
+:"deal with step 2";
+
+if ("Judge Condition 1") then (true)
+	:execute the operator if condition 1 is true;
+endif
+
+stop
+
+@enduml

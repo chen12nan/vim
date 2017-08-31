@@ -1,4 +1,5 @@
 @startuml
+
 User -> CaptureExecute: executeOne
 activate CaptureExecute #FFBBBB
 
@@ -11,7 +12,7 @@ deactivate LayerTabWidget
 
 CaptureExecute -> LayoutViewerInstance: getTopLayerGroups
 activate LayoutViewerInstance
-CaptureExecute <- LayoutViewerInstance: return the top layer
+CaptureExecute <- LayoutViewerInstance: return the top layers
 deactivate LayoutViewerInstance
 
 CaptureExecute -> PatternDB:createPattern(name) 
@@ -19,7 +20,8 @@ activate PatternDB
 CaptureExecute <- PatternDB: create a pattern
 deactivate PatternDB
 
-==traverse the top layer in current canvas==
+==traverse the top layers in current canvas==
+loop traverse the top layers
 CaptureExecute -> CaptureExecute: initLayer(topLayer, pattern) 
 activate CaptureExecute #LightBlue
 CaptureExecute -> LayerGroupBase: getChild(index) // traverse the topLayer to get the child layer that have polygon
@@ -75,6 +77,7 @@ activate Pattern
 CaptureExecute <- Pattern: attach the polygonset to pattern
 deactivate Pattern
 deactivate CaptureExecute
+end
 
 CaptureExecute -> Pattern: setAttr("dbu", dbu);
 activate Pattern
@@ -169,10 +172,13 @@ activate QSettings
 PatternCaptureForm <- QSettings: get the current plib name
 deactivate QSettings
 
+alt pdb path and plib name are empty
+note left: If both pdb path and plib name are empty\nA dialog will pop up for user to select the pdb path and the plib name
 PatternCaptureForm -> PatternCaptureForm: chooseMongoPath()
 activate PatternCaptureForm #DarkSalmon
 deactivate PatternCaptureForm
-note left: If both pdb path and plib name are empty\nA dialog will pop up for user to select the pdb path and the plib name
+end
+
 
 ==connect pdb==
 PatternCaptureForm -> PatternDB: connectPatternDB(pdbPath)
@@ -181,10 +187,12 @@ PatternCaptureForm <- PatternDB: return the pdb pointer
 deactivate PatternDB
 
 ==execute capture function==
+loop traverse the execute lists 
 PatternCaptureForm -> CaptureExecute: executreOne() // Traverse the list to execute
 activate CaptureExecute
 PatternCaptureForm <- CaptureExecute: if capture successfully, return true, otherwise return false
 deactivate CaptureExecute
+end
 
 deactivate PatternCaptureForm
 @enduml
