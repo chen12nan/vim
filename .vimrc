@@ -52,12 +52,13 @@ filetype plugin on
 "根据侦测到的不同类型采用不同的缩进
 filetype indent on
 
-
 hi CursorLine cterm=NONE ctermbg=blue ctermfg=white guibg=NONE guifg=NONE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set tags
 
 set tags=tags
+set tags+=/usr/include/tags
+set tags+=/usr/include/sys/tags
 "set tags+=./tags
 " set tags+=/usr/local/Trolltech/Qt-4.8.6/include/tags
 " set tags+=/usr/include/GNUstep/tags
@@ -67,10 +68,10 @@ set tags=tags
 set path+=./
 "set tags+=/opt/Qt5.3.0/tags
 "每次保存文件的时候更新 tags
-nmap <F7> :!ctags -R --sort=yes --c++-kinds=+p  --java-kinds=+p --fields=+ialS --extra=+q .<CR>
-nmap <F4> :A<CR>
+nmap gt :!ctags -R --sort=yes --c++-kinds=+p  --java-kinds=+p --fields=+ialS --extra=+q .<CR>
+nmap gh :A<CR>
 nmap <C-f> :Rgrep<CR>
-nmap <F10> :!lookup<CR>
+nmap <lf> :!lookup<CR>
 nmap <S-f> :LookupFile<CR>
 nmap <C-q> :q<CR>
 imap kj <esc>
@@ -91,8 +92,7 @@ let Tlist_WinWidth=20
 let Tlist_WinHeight=100
 let Tlist_File_Fold_Auto_Close=1 "非当前文件，函数列表折叠隐藏
 "map <slient> <leader>tl :TlistToggle<cr> (没有作用)
-nmap <F2> :TlistToggle<CR>
-
+nmap lt :TlistToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set NERDTree and Winmanager
 let NERDTreeWinPos="right"
@@ -100,7 +100,7 @@ let NERDTreeWinSize=15
 "let NERDTreeQuitOnOpen=1
 "let NERDTreeWinHeight=20  （没有作用）
 "let NERDTreeWinWidth=20   （没有作用）
-nmap <F3> :NERDTreeToggle<CR>
+nmap nt :NERDTreeToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
