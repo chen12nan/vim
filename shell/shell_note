@@ -12,4 +12,6 @@
 #export CLICOLOR=1
 #export LSCOLORS=gxfxaxdxcxegedabagacad
 
+#vim 显示内容后， 内容还显示在terminal上
+export TERM=xterm
 
